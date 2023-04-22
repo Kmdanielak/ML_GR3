@@ -26,7 +26,7 @@ df1 = df[(df.cena >= _min) & (df.cena <= q3) & (df.rok_budowy < 2024)]
 # plt.show()
 print(df1.describe().to_string())
 
-X = df1.iloc[:, 2:]
+X = df1.loc[:, ['liczba_pieter', 'pietro', 'powierzchnia', 'rok_budowy']]
 y = df1.cena
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
