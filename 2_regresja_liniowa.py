@@ -21,7 +21,7 @@ _min = df.describe().loc['min','cena']
 q1 = df.describe().loc['25%','cena']
 q3 = df.describe().loc['75%','cena']
 
-df1 = df[(df.cena >= q1) & (df.cena <= q3) & (df.rok_budowy < 2024)]
+df1 = df[(df.cena >= _min) & (df.cena <= q3) & (df.rok_budowy < 2024)]
 # sns.displot(df1.cena)
 # plt.show()
 print(df1.describe().to_string())
@@ -29,7 +29,10 @@ print(df1.describe().to_string())
 X = df1.iloc[:, 2:]
 y = df1.cena
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 model = LinearRegression()
-model.fit(X, y)
+model.fit(X_train, y_train)
+print(model.score(X_test, y_test))
+
+print(pd.DataFrame(model.coef_, X.columns))
