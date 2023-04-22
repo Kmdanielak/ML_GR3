@@ -22,9 +22,26 @@ print(df.head(10))
 # plt.show()
 
 # zmiana na dane numeryczne
-df = pd.get_dummies(df)
+df = pd.get_dummies(df, dtype=int)
 print(df.head(10))
 del(df['Gender_Male'])
 df = df.rename(columns={'Gender_Female':'Gender'})
 print(df)
+#szybsza zmiana nazw kolumn
+# new_names = ['col1', 'col2']
+# df = df.rename(columns=dict(zip(df.columns[:-1], new_names)))
+print(df)
+
+# 0 - male
+# 1 - female
+
+model = LinearRegression()
+model.fit(df[['Height','Gender']],df['Weight'])
+print(model.coef_, model.intercept_)
+
+#moje dane
+gender = 0
+height = 192
+weight = model.coef_[0] * height + model.coef_[1] * gender + model.intercept_
+print(weight)
 
